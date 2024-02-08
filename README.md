@@ -1,31 +1,6 @@
-spring.data.mongodb.uri=mongodb+srv://upgrad:upgrad123@cluster0.rle5i.mongodb.net/?retryWrites=true&w=majority
-spring.data.mongodb.database=enydb
-
-package com.entity;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Document
-public class Rating {
-	@Id
-	private String ratingID;
-	private String userID;
-	private String hotelID;
-	private int rating;
-	private String feedback;
-
-}
-
-
 package com.repo;
+
+import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -34,8 +9,11 @@ import com.entity.Rating;
 @Repository
 public interface RatingRepo extends MongoRepository<Rating, String>{
 	
+	List<Rating> findByUserID(String userID);
+	List<Rating> findByHotelID(String hotelID);
 
 }
+
 
 
 
@@ -44,13 +22,39 @@ package com.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.entity.Rating;
+import com.repo.RatingRepo;
 
-public interface RatingService {
-	
-	public Rating create(Rating rating);
-	List<Rating> getRatings();
-	List<Rating> getRatingByUserID(String userID);
-	List<Rating> getRatingByHotelID(String hotelID);
+@Service
+public class RatingServiceImpl implements RatingService {
+	@Autowired
+	private RatingRepo repo;
+
+	@Override
+	public Rating create(Rating rating) {
+
+		return repo.save(rating);
+	}
+
+	@Override
+	public List<Rating> getRatings() {
+
+		return repo.findAll();
+	}
+
+	@Override
+	public List<Rating> getRatingByUserID(String userID) {
+
+		return repo.findByUserID(userID);
+	}
+
+	@Override
+	public List<Rating> getRatingByHotelID(String hotelID) {
+
+		return repo.findByHotelID(hotelID);
+	}
+
 }
-
