@@ -1,31 +1,8 @@
-server:
-    port: 8888
-spring:
-    application:
-      name: gateway
-  
-    cloud:
-      gateway:
-        routes:
-          - id: USER-SERVICES
-            predicates:
-              - Path=/users/**
-            uri:  lb://USER-SERVICES
-
-          - id: HOTEL-SERVICES
-            predicates:
-              - Path=/hotels/**
-            uri:  lb://HOTEL-SERVICES
-
-          - id: RATING-SERVICES
-            predicates:
-              - Path=/ratings/**
-            uri:  lb://RATING-SERVICES
-
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://localhost:7777/eureka
-  
-
-  
+server.port=8012
+spring.application.name=configserver
+spring.profiles.active=git
+spring.cloud.config.server.git.uri=https://github.com/amarjeet-arora/enyspring
+spring.cloud.config.server.git.username=amarjeet.sn1@gmail.com
+spring.cloud.config.server.git.password=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
+spring.cloud.config.server.git.clone-on-startup=true
+spring.cloud.config.server.git.default-label=main
