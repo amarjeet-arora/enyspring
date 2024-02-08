@@ -1,4 +1,3 @@
-server.port=7777
-eureka.instance.hostname=localhost
-eureka.client.registerWithEureka=false
-eureka.client.fetchRegistry=false
+spring.application.name=hotel-services
+eureka.instance.prefer-ip-address=true
+eureka.client.serviceUrl.defaultZone=http://localhost:7777/eureka/
