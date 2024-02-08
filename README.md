@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		List<Rating> ratings = Arrays.stream(ratingData).toList();
 
 		List<Rating> ratingList = ratings.stream().map(rating -> {
-			ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("localhost:8082/hotels/" + rating.getHotelID(),
+			ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("http://localhost:8082/hotels/" + rating.getHotelID(),
 					Hotel.class);
 			Hotel hotel = forEntity.getBody();
 			System.out.println("Status Code " + forEntity.getStatusCode());
